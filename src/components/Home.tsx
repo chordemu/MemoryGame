@@ -12,13 +12,13 @@ const Home = ({}) => {
   return (
     <FlippedContextProvider>
       <View style={styles.container}>
-        <MyText>{flips}</MyText>
         <CardDisplay
           turn={turn}
           setTurn={setTurn}
           flips={flips}
           setFlips={setFlips}
-        />
+          />
+          <MyText>{flips}</MyText>
         {/* <ResetButton setTurn={setTurn} /> */}
       </View>
     </FlippedContextProvider>
