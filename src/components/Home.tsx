@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import FlippedContextProvider from '../contexts/FlippedContextProvider';
 import TurnType from '../types/TurnType';
 import CardDisplay from './CardDisplay';
-import MyText from './MyText';
+import FlipsText from './FlipsText';
 
 const Home = ({}) => {
   const [turn, setTurn] = useState<TurnType>('first');
@@ -12,13 +12,13 @@ const Home = ({}) => {
   return (
     <FlippedContextProvider>
       <View style={styles.container}>
+        <FlipsText flips={flips} />
         <CardDisplay
           turn={turn}
           setTurn={setTurn}
           flips={flips}
           setFlips={setFlips}
-          />
-          <MyText>{flips}</MyText>
+        />
         {/* <ResetButton setTurn={setTurn} /> */}
       </View>
     </FlippedContextProvider>
@@ -28,7 +28,6 @@ const Home = ({}) => {
 export default Home;
 
 const styles = StyleSheet.create({
-  title: { fontSize: 40, fontWeight: 400 },
   container: {
     flex: 1,
     justifyContent: 'center',

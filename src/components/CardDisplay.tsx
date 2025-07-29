@@ -7,6 +7,7 @@ import TurnType from '../types/TurnType';
 import Card from './Card';
 import PlayAgainButton from './buttons/PlayAgainButton';
 import MyText from './MyText';
+import globalStyles from '../constants/globalStyles';
 
 type CardDisplayProps = {
   turn: TurnType;
@@ -22,7 +23,7 @@ const CardDisplay: React.FC<CardDisplayProps> = ({
   setFlips,
 }) => {
   const [order, setOrder] = useState(randomArray);
-  const { matchedIds } = useFlipped();
+  const { matchedIds, isGameWon } = useFlipped();
 
   const data = cardData.map((cardA, index) => {
     // TODO: fix
@@ -44,12 +45,12 @@ const CardDisplay: React.FC<CardDisplayProps> = ({
 
   return (
     <>
-      {matchedIds.length === cardData.length ? (
+      {isGameWon ? (
         <View style={styles.container}>
           <MyText style={styles.title}>You win!</MyText>
           <MyText>
-            Number of flips: <MyText style={styles.boldText}>{flips}</MyText>
-            
+            Number of flips:{' '}
+            <MyText style={globalStyles.boldText}>{flips}</MyText>
           </MyText>
           <PlayAgainButton
             setTurn={setTurn}
@@ -80,5 +81,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#cbffd0',
   },
   title: { fontSize: 42, fontWeight: 400, marginBottom: 30 },
-  boldText: { fontWeight: 500 },
 });

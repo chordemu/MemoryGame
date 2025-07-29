@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { CardId } from '../constants/cardData';
+import cardData, { CardId } from '../constants/cardData';
 
 type FlippedContextType = {
   flippedIds: CardId[];
@@ -9,6 +9,7 @@ type FlippedContextType = {
   setMatchedIds: React.Dispatch<React.SetStateAction<CardId[]>>;
   lastFlippedId: string | undefined;
   addMatchedCard: (cardId: CardId) => void;
+  isGameWon: boolean;
 };
 
 export const FlippedContext = createContext<FlippedContextType | undefined>(
@@ -42,6 +43,8 @@ const FlippedContextProvider: React.FC<FlippedContextProviderProps> = ({
     return;
   };
 
+  const isGameWon = matchedIds.length === cardData.length;
+
   return (
     <FlippedContext.Provider
       value={{
@@ -52,6 +55,7 @@ const FlippedContextProvider: React.FC<FlippedContextProviderProps> = ({
         setMatchedIds,
         addMatchedCard,
         lastFlippedId,
+        isGameWon,
       }}
     >
       {children}
