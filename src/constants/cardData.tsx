@@ -18,8 +18,8 @@ const cardData: CardType[] = [
   { id: 'redB', colour: 'red', index: 7 },
   { id: 'blackA', colour: 'black', index: 8 },
   { id: 'blackB', colour: 'black', index: 9 },
-  { id: 'purpleA', colour: '#fcba03', index: 10 },
-  { id: 'purpleB', colour: '#fcba03', index: 11 },
+  { id: 'ochreA', colour: '#fcba03', index: 10 },
+  { id: 'ochreB', colour: '#fcba03', index: 11 },
 ];
 
 export const emptyCard: CardType = {

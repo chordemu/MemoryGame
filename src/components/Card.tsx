@@ -40,7 +40,7 @@ const Card: React.FC<CardProps> = ({ card, turn, setTurn, setFlips }) => {
       const lastFlippedCard = cardData.find(item => item.id === lastFlippedId);
 
       if (!lastFlippedCard) {
-        throw new Error('blengle');
+        throw new Error('No lastFlippedCard detected');
       }
       setMatchedIds([...matchedIds, id, lastFlippedCard.id]);
       setFlippedIds([]);
@@ -61,7 +61,7 @@ const Card: React.FC<CardProps> = ({ card, turn, setTurn, setFlips }) => {
     const lastFlippedCard = cardData.find(item => item.id === lastFlippedId);
 
     if (!lastFlippedCard) {
-      throw new Error('blengle');
+      throw new Error('No lastFlippedCard detected');
     }
 
     const colourOfLastFlipped = lastFlippedCard.colour;
