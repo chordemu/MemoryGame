@@ -5,15 +5,15 @@
  * @format
  */
 
-import { StatusBar, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 import Home from './src/components/Home';
 
 function App() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar barStyle={'light-content'} />
       <Home />
-    </View>
+    </SafeAreaView>
   );
 }
 
