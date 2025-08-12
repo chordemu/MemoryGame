@@ -7,12 +7,12 @@ import EmptyCard from './cards/EmptyCard';
 import FlippedCard from './cards/FlippedCard';
 import UnflippedCard from './cards/UnflippedCard';
 
-type GameDisplayProps = {
+type CardDisplayProps = {
   setFlips: React.Dispatch<React.SetStateAction<number>>;
   order: number[];
 };
 
-export default function GameDisplay({ setFlips, order }: GameDisplayProps) {
+export default function CardDisplay({ setFlips, order }: CardDisplayProps) {
   const { matchedIds } = useMatchedContext();
   const { flippedIds } = useFlippedContext();
 

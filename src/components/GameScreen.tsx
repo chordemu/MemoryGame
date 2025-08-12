@@ -1,7 +1,7 @@
 import React from 'react';
 import FlipsText from './FlipsText';
-import GameDisplay from './GameDisplay';
 import ScreenContainer from './ScreenContainer';
+import CardDisplay from './CardDisplay';
 
 type GameScreenProps = {
   flips: number;
@@ -17,10 +17,7 @@ export default function GameScreen({
   return (
     <ScreenContainer>
       <FlipsText flips={flips} />
-      <GameDisplay
-        setFlips={setFlips}
-        order={order}
-      />
+      <CardDisplay setFlips={setFlips} order={order} />
     </ScreenContainer>
   );
 }
