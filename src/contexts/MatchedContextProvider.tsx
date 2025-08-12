@@ -1,11 +1,12 @@
-import React, { createContext, PropsWithChildren, useState } from 'react';
+import React, { createContext, PropsWithChildren, useReducer } from 'react';
 import cardData, { CardId } from '../constants/cardData';
+import createCardIdArrayReducer from '../reducers/createCardIdArrayReducer';
 
 type MatchedContextType = {
   matchedIds: CardId[];
-  setMatchedIds: React.Dispatch<React.SetStateAction<CardId[]>>;
-  addMatchedIds: (cardIds: CardId[]) => void;
   resetMatchedIds: () => void;
+  setMatchedIds: (cardIds: CardId[]) => void;
+  addMatchedIds: (cardIds: CardId[]) => void;
   isGameWon: boolean;
 };
 
@@ -16,16 +17,24 @@ export const MatchedContext = createContext<MatchedContextType | undefined>(
 export default function MatchedContextProvider({
   children,
 }: PropsWithChildren) {
-  const [matchedIds, setMatchedIds] = useState<CardId[]>([]);
+  const matchedReducer = createCardIdArrayReducer();
 
-  const addMatchedIds = (cardIds: CardId[]) => {
-    const newMatchedIds = [...matchedIds, ...cardIds];
-    setMatchedIds(newMatchedIds);
+  const [state, dispatch] = useReducer(matchedReducer, { items: [] });
+
+  const matchedIds = state.items;
+
+  const resetMatchedIds = () => {
+    dispatch({ type: 'RESET' });
     return;
   };
 
-  const resetMatchedIds = () => {
-    setMatchedIds([]);
+  const setMatchedIds = (cardIds: CardId[]) => {
+    dispatch({ type: 'SET', payload: cardIds });
+    return;
+  };
+
+  const addMatchedIds = (cardIds: CardId[]) => {
+    dispatch({ type: 'ADD', payload: cardIds });
     return;
   };
 
@@ -35,9 +44,9 @@ export default function MatchedContextProvider({
     <MatchedContext.Provider
       value={{
         matchedIds,
+        resetMatchedIds,
         setMatchedIds,
         addMatchedIds,
-        resetMatchedIds,
         isGameWon,
       }}
     >

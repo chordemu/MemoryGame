@@ -3,19 +3,16 @@ import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
 import cardData, { CardType, emptyCard } from '../constants/cardData';
 import { useFlippedContext } from '../contexts/useFlippedContext';
 import { useMatchedContext } from '../contexts/useMatchedContext';
-import Card from './cards/Card';
 import EmptyCard from './cards/EmptyCard';
 import FlippedCard from './cards/FlippedCard';
+import UnflippedCard from './cards/UnflippedCard';
 
 type GameDisplayProps = {
   setFlips: React.Dispatch<React.SetStateAction<number>>;
   order: number[];
 };
 
-export default function GameDisplay({
-  setFlips,
-  order,
-}: GameDisplayProps) {
+export default function GameDisplay({ setFlips, order }: GameDisplayProps) {
   const { matchedIds } = useMatchedContext();
   const { flippedIds } = useFlippedContext();
 
@@ -39,9 +36,7 @@ export default function GameDisplay({
       return <FlippedCard colour={item.colour} />;
     }
 
-    return (
-      <Card card={item} setFlips={setFlips} />
-    );
+    return <UnflippedCard card={item} setFlips={setFlips} />;
   };
 
   const getCardListKey = (item: CardType, index: number) =>

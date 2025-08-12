@@ -2,7 +2,6 @@ import React, { PropsWithChildren } from 'react';
 import { StyleSheet, Text, TextProps } from 'react-native';
 
 type MyTextProps = PropsWithChildren<TextProps>;
-// type MyTextProps = TextProps & { children: React.ReactNode };
 
 export default function MyText({ children, style, ...rest }: MyTextProps) {
   return (

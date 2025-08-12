@@ -1,13 +1,9 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { StyleSheet } from 'react-native';
 import MyText from './MyText';
 import ScreenContainer from './ScreenContainer';
 
-type WinScreenProps = {
-  children: React.ReactNode;
-};
-
-export default function WinScreen({ children }: WinScreenProps) {
+export default function WinScreen({ children }: PropsWithChildren) {
   return (
     <ScreenContainer>
       <MyText style={styles.title}>You win!</MyText>

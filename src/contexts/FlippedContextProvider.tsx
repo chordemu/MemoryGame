@@ -1,9 +1,10 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, PropsWithChildren, useReducer } from 'react';
 import { CardId } from '../constants/cardData';
+import createCardIdArrayReducer from '../reducers/createCardIdArrayReducer';
 
 type FlippedContextType = {
   flippedIds: CardId[];
-  setFlippedIds: React.Dispatch<React.SetStateAction<CardId[]>>;
+  setFlippedIds: (cardIds: CardId[]) => void;
   addFlippedIds: (cardIds: CardId[]) => void;
   resetFlippedIds: () => void;
   lastFlippedId: CardId | null;
@@ -13,28 +14,31 @@ export const FlippedContext = createContext<FlippedContextType | undefined>(
   undefined,
 );
 
-type FlippedContextProviderProps = {
-  children: React.ReactNode;
-};
-
 export default function FlippedContextProvider({
   children,
-}: FlippedContextProviderProps) {
-  const [flippedIds, setFlippedIds] = useState<CardId[]>([]);
+}: PropsWithChildren) {
+  const flippedReducer = createCardIdArrayReducer();
+
+  const [state, dispatch] = useReducer(flippedReducer, { items: [] });
+
+  const flippedIds = state.items;
 
   const numberOfFlipped = flippedIds.length;
 
   const lastFlippedId =
     numberOfFlipped >= 1 ? flippedIds[numberOfFlipped - 1] : null;
 
-  const addFlippedIds = (cardIds: CardId[]) => {
-    const newFlippedIds = [...flippedIds, ...cardIds];
-    setFlippedIds(newFlippedIds);
+  const resetFlippedIds = () => {
+    dispatch({ type: 'RESET' });
+    return;
+  };
+  const setFlippedIds = (cardIds: CardId[]) => {
+    dispatch({ type: 'SET', payload: cardIds });
     return;
   };
 
-  const resetFlippedIds = () => {
-    setFlippedIds([]);
+  const addFlippedIds = (cardIds: CardId[]) => {
+    dispatch({ type: 'ADD', payload: cardIds });
     return;
   };
 
@@ -42,9 +46,9 @@ export default function FlippedContextProvider({
     <FlippedContext.Provider
       value={{
         flippedIds,
+        resetFlippedIds,
         setFlippedIds,
         addFlippedIds,
-        resetFlippedIds,
         lastFlippedId,
       }}
     >
