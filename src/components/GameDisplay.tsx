@@ -1,24 +1,23 @@
 import React from 'react';
 import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
 import cardData, { CardType, emptyCard } from '../constants/cardData';
+import { useFlippedContext } from '../contexts/useFlippedContext';
 import { useMatchedContext } from '../contexts/useMatchedContext';
-import TurnType from '../types/TurnType';
-import Card from './Card';
+import Card from './cards/Card';
+import EmptyCard from './cards/EmptyCard';
+import FlippedCard from './cards/FlippedCard';
 
 type GameDisplayProps = {
-  turn: TurnType;
-  setTurn: React.Dispatch<React.SetStateAction<TurnType>>;
   setFlips: React.Dispatch<React.SetStateAction<number>>;
   order: number[];
 };
 
 export default function GameDisplay({
-  turn,
-  setTurn,
   setFlips,
   order,
 }: GameDisplayProps) {
-  const ids = useMatchedContext().matchedIds;
+  const { matchedIds } = useMatchedContext();
+  const { flippedIds } = useFlippedContext();
 
   const data = cardData.map((_, index) => {
     const orderedCard = cardData.find(cardB => cardB.index === order[index])!;
@@ -26,12 +25,24 @@ export default function GameDisplay({
   });
 
   const flatlistData = data.map(card =>
-    ids.includes(card.id) ? emptyCard : card,
+    matchedIds.includes(card.id) ? emptyCard : card,
   );
 
-  const renderItem: ListRenderItem<CardType> = ({ item }) => (
-    <Card card={item} turn={turn} setTurn={setTurn} setFlips={setFlips} />
-  );
+  const renderItem: ListRenderItem<CardType> = ({ item }) => {
+    if (item.isEmpty) {
+      return <EmptyCard />;
+    }
+
+    const isFlipped = flippedIds.includes(item.id);
+
+    if (isFlipped) {
+      return <FlippedCard colour={item.colour} />;
+    }
+
+    return (
+      <Card card={item} setFlips={setFlips} />
+    );
+  };
 
   const getCardListKey = (item: CardType, index: number) =>
     item.isEmpty ? 'empty' + index : item.id + index;

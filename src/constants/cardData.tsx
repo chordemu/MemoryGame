@@ -2,9 +2,9 @@ import { ColorValue } from 'react-native';
 
 export type CardId = string;
 
-type EmptyCard = { isEmpty: true; colour: ColorValue };
+export type EmptyCard = { isEmpty: true };
 
-type ValidCard = {
+export type ValidCard = {
   isEmpty: false;
   id: CardId;
   colour: ColorValue;
@@ -65,7 +65,6 @@ export const cardData: ValidCard[] = coloursList.flatMap((item, index) => {
 
 export const emptyCard: CardType = {
   isEmpty: true,
-  colour: 'transparent',
 };
 
 export default cardData;

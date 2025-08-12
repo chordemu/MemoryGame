@@ -1,38 +1,30 @@
 import React from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
-import cardData, { CardType } from '../constants/cardData';
-import TurnType from '../types/TurnType';
-import { useFlippedContext } from '../contexts/useFlippedContext';
-import { useMatchedContext } from '../contexts/useMatchedContext';
+import { Pressable } from 'react-native';
+import cardData, { ValidCard } from '../../constants/cardData';
+import globalStyles from '../../constants/globalStyles';
+import { useFlippedContext } from '../../contexts/useFlippedContext';
+import { useMatchedContext } from '../../contexts/useMatchedContext';
 
 const MATCH_TIME_OUT = 100;
 const MISMATCH_TIME_OUT = 200;
 
 type CardProps = {
-  card: CardType;
-  turn: TurnType;
-  setTurn: React.Dispatch<React.SetStateAction<TurnType>>;
+  card: ValidCard;
   setFlips: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function Card({ card, turn, setTurn, setFlips }: CardProps) {
+export default function Card({ card, setFlips }: CardProps) {
   const { flippedIds, addFlippedIds, resetFlippedIds, lastFlippedId } =
     useFlippedContext();
   const { matchedIds, addMatchedIds } = useMatchedContext();
-
-  if (card.isEmpty) {
-    return <View style={[styles.cardContainer, styles.emptyCard]} />;
-  }
-
   const { id, colour } = card;
 
-  const flipped = flippedIds.includes(id);
+  const turn = flippedIds.length % 2 === 0 ? 'first' : 'second';
 
-  const handleMisMatch = () => {
+  const handleMismatch = () => {
     setTimeout(() => {
       resetFlippedIds();
     }, MISMATCH_TIME_OUT);
-    setTurn('first');
   };
 
   const handleMatch = () => {
@@ -44,7 +36,6 @@ export default function Card({ card, turn, setTurn, setFlips }: CardProps) {
       }
       addMatchedIds([id, lastFlippedCard.id]);
       resetFlippedIds();
-      setTurn('first');
     }, MATCH_TIME_OUT);
     if (matchedIds.length === cardData.length) {
       handleWin();
@@ -53,9 +44,7 @@ export default function Card({ card, turn, setTurn, setFlips }: CardProps) {
 
   const handleWin = () => {};
 
-  const handleFirstPress = () => {
-    setTurn('second');
-  };
+  const handleFirstPress = () => {};
 
   const handleSecondPress = () => {
     const lastFlippedCard = cardData.find(item => item.id === lastFlippedId);
@@ -69,7 +58,7 @@ export default function Card({ card, turn, setTurn, setFlips }: CardProps) {
     if (colour === colourOfLastFlipped) {
       handleMatch();
     } else {
-      handleMisMatch();
+      handleMismatch();
     }
   };
 
@@ -93,26 +82,6 @@ export default function Card({ card, turn, setTurn, setFlips }: CardProps) {
   };
 
   return (
-    <>
-      {flipped ? (
-        <View style={[styles.cardContainer, { backgroundColor: colour }]} />
-      ) : (
-        <Pressable onPress={handlePress} style={[styles.cardContainer]} />
-      )}
-    </>
+    <Pressable onPress={handlePress} style={[globalStyles.cardContainer]} />
   );
 }
-
-const styles = StyleSheet.create({
-  cardContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    height: 120,
-    width: 80,
-    borderWidth: 1,
-    margin: 10,
-    borderRadius: 10,
-  },
-  emptyCard: { backgroundColor: 'transparent', borderColor: 'transparent' },
-});
