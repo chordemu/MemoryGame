@@ -1,0 +1,5 @@
+APP LOAD Initial data: [{}, {}, …] Instantiate initial data Set state to
+randomised initial data Initial state: flip1 flip1 FLIP FIRST CARD Add card 1 id
+to global state set(flip2) flip2 FLIP SECOND CARD Add card 2 id to global state
+Check if types of cards match MATCH Keep both cards flipped Disable buttons
+NON-MATCH Reset both cards set(flip1)
