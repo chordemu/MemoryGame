@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, PropsWithChildren, useState } from 'react';
 import cardData, { CardId } from '../constants/cardData';
 
 type MatchedContextType = {
@@ -13,13 +13,9 @@ export const MatchedContext = createContext<MatchedContextType | undefined>(
   undefined,
 );
 
-type MatchedContextProviderProps = {
-  children: React.ReactNode;
-};
-
-const MatchedContextProvider: React.FC<MatchedContextProviderProps> = ({
+export default function MatchedContextProvider({
   children,
-}) => {
+}: PropsWithChildren) {
   const [matchedIds, setMatchedIds] = useState<CardId[]>([]);
 
   const addMatchedIds = (cardIds: CardId[]) => {
@@ -48,6 +44,4 @@ const MatchedContextProvider: React.FC<MatchedContextProviderProps> = ({
       {children}
     </MatchedContext.Provider>
   );
-};
-
-export default MatchedContextProvider;
+}

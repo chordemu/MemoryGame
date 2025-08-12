@@ -15,7 +15,7 @@ type CardProps = {
   setFlips: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const Card: React.FC<CardProps> = ({ card, turn, setTurn, setFlips }) => {
+export default function Card({ card, turn, setTurn, setFlips }: CardProps) {
   const { flippedIds, addFlippedIds, resetFlippedIds, lastFlippedId } =
     useFlippedContext();
   const { matchedIds, addMatchedIds } = useMatchedContext();
@@ -101,9 +101,7 @@ const Card: React.FC<CardProps> = ({ card, turn, setTurn, setFlips }) => {
       )}
     </>
   );
-};
-
-export default Card;
+}
 
 const styles = StyleSheet.create({
   cardContainer: {

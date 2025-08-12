@@ -1,31 +1,29 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { Pressable, PressableProps, StyleSheet } from 'react-native';
+import { myColours } from '../../constants/globalStyles';
 
 type MyButtonProps = {
-  children: React.ReactNode;
   style?: PressableProps;
 };
 
-const MyButton: React.FC<MyButtonProps & PressableProps> = ({
+export default function MyButton({
   children,
   style,
   ...rest
-}) => {
+}: PropsWithChildren<MyButtonProps> & PressableProps) {
   return (
     <Pressable
       style={({ pressed }) => [
         styles.myButton,
         style,
-        pressed && { backgroundColor: '#bebebeff' },
+        pressed && { backgroundColor: myColours.buttonPressed },
       ]}
       {...rest}
     >
       {children}
     </Pressable>
   );
-};
-
-export default MyButton;
+}
 
 const styles = StyleSheet.create({
   myButton: {
@@ -35,7 +33,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 20,
     borderWidth: 1,
-    backgroundColor: '#ffffffff',
+    backgroundColor: myColours.button,
     margin: 30,
   },
 });

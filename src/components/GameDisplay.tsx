@@ -12,12 +12,12 @@ type GameDisplayProps = {
   order: number[];
 };
 
-const GameDisplay: React.FC<GameDisplayProps> = ({
+export default function GameDisplay({
   turn,
   setTurn,
   setFlips,
   order,
-}) => {
+}: GameDisplayProps) {
   const ids = useMatchedContext().matchedIds;
 
   const data = cardData.map((_, index) => {
@@ -45,9 +45,7 @@ const GameDisplay: React.FC<GameDisplayProps> = ({
       numColumns={3}
     />
   );
-};
-
-export default GameDisplay;
+}
 
 const styles = StyleSheet.create({
   flatlistContainer: {

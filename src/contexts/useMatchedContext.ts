@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { MatchedContext } from './MatchedContextProvider';
 
-export const useMatchedContext = () => {
+export function useMatchedContext() {
   const context = useContext(MatchedContext);
   if (!context) {
     throw new Error(
@@ -9,4 +9,4 @@ export const useMatchedContext = () => {
     );
   }
   return context;
-};
+}

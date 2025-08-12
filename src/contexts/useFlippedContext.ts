@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { FlippedContext } from './FlippedContextProvider';
 
-export const useFlippedContext = () => {
+export function useFlippedContext() {
   const context = useContext(FlippedContext);
   if (!context) {
     throw new Error(
@@ -9,4 +9,4 @@ export const useFlippedContext = () => {
     );
   }
   return context;
-};
+}

@@ -12,13 +12,13 @@ type GameScreenProps = {
   order: number[];
 };
 
-const GameScreen: React.FC<GameScreenProps> = ({
+export default function GameScreen({
   turn,
   setTurn,
   flips,
   setFlips,
   order,
-}) => {
+}: GameScreenProps) {
   return (
     <ScreenContainer>
       <FlipsText flips={flips} />
@@ -30,6 +30,4 @@ const GameScreen: React.FC<GameScreenProps> = ({
       />
     </ScreenContainer>
   );
-};
-
-export default GameScreen;
+}

@@ -17,9 +17,9 @@ type FlippedContextProviderProps = {
   children: React.ReactNode;
 };
 
-const FlippedContextProvider: React.FC<FlippedContextProviderProps> = ({
+export default function FlippedContextProvider({
   children,
-}) => {
+}: FlippedContextProviderProps) {
   const [flippedIds, setFlippedIds] = useState<CardId[]>([]);
 
   const numberOfFlipped = flippedIds.length;
@@ -51,6 +51,4 @@ const FlippedContextProvider: React.FC<FlippedContextProviderProps> = ({
       {children}
     </FlippedContext.Provider>
   );
-};
-
-export default FlippedContextProvider;
+}

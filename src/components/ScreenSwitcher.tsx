@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import { useMatchedContext } from '../contexts/useMatchedContext';
-import randomArray from '../randomArrayGenerator';
 import TurnType from '../types/TurnType';
 import GameScreen from './GameScreen';
 import WinScreen from './WinScreen';
 import PlayAgainButton from './buttons/PlayAgainButton';
+import randomArrayGenerator from '../randomArrayGenerator';
+import useGameReset from '../hooks/useGameReset';
+import FlipsText from './FlipsText';
 
-const ScreenSwitcher = () => {
+export default function ScreenSwitcher() {
   const [turn, setTurn] = useState<TurnType>('first');
   const [flips, setFlips] = useState<number>(0);
-  const [order, setOrder] = useState<number[]>(randomArray);
+  const [order, setOrder] = useState<number[]>(randomArrayGenerator);
   const { isGameWon } = useMatchedContext();
+
+  const resetGame = useGameReset(setTurn, setFlips, setOrder);
 
   return (
     <>
       {isGameWon ? (
         <WinScreen>
-          <WinScreen.FinalFlipsText flips={flips} />
-          <PlayAgainButton
-            setTurn={setTurn}
-            setFlips={setFlips}
-            setOrder={setOrder}
-          />
+          <FlipsText flips={flips} />
+          <PlayAgainButton handlePress={resetGame} />
         </WinScreen>
       ) : (
         <GameScreen
@@ -34,6 +34,4 @@ const ScreenSwitcher = () => {
       )}
     </>
   );
-};
-
-export default ScreenSwitcher;
+}

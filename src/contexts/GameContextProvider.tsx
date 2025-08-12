@@ -1,15 +1,11 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import FlippedContextProvider from './FlippedContextProvider';
 import MatchedContextProvider from './MatchedContextProvider';
 
-const GameProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export default function GameProvider({ children }: PropsWithChildren) {
   return (
     <FlippedContextProvider>
       <MatchedContextProvider>{children}</MatchedContextProvider>
     </FlippedContextProvider>
   );
-};
-
-export default GameProvider;
+}
